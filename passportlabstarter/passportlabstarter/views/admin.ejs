@@ -1,0 +1,53 @@
+<%#
+----------------------------------------------------------------------------------------------------
+The following code is obtained from ChatGPT 
+The query to obtain the code from ChatGPT is:
+Query: giving the code below, i want to display the active session id
+when user go to this page http://localhost:8000/admin
+and only when the user role is admin.
+if the user role is user, they can not access this page http://localhost:8000/admin
+it should also show a list of current sessions, and the ID of the user that session belongs to.
+Next to each session should be a "revoke" button. 
+When clicked, it should destroy that user's session.
+----------------------------------------------------------------------------------------------------
+%>
+
+<h1 class="mt-4">Admin Dashboard</h1>
+<p class="lead mb-3">Welcome <%= user.name %></p>
+<p class="lead mb-3">Role: <%= user.role %></p>
+<p class="lead mb-3">Your SessionID: <%= user.sessionId %></p>
+<p class="lead mb-3">UserID: <%= user.id %></p>
+<a href="/auth/logout" class="btn btn-secondary mb-4">Logout</a>
+
+<hr/>
+
+<h3>Current Active Sessions</h3>
+<table class="table table-bordered mt-3">
+  <thead class="thead-dark">
+    <tr>
+      <th>Session ID</th>
+      <th>User ID</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (typeof sessions !== 'undefined' && sessions.length > 0) { %>
+      <% sessions.forEach((session) => { %>
+        <tr>
+            <td><%= session.sessionId %></td>
+            <td><%= session.userId %></td>
+          <td>
+            <form action="/admin/revoke" method="POST" style="display:inline;">
+              <input type="hidden" name="sessionId" value="<%= session.sessionId %>" />
+              <button type="submit" class="btn btn-danger btn-sm">Revoke</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    <% } else { %>
+      <tr>
+        <td colspan="3" class="text-center">No active sessions found.</td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

@@ -1,0 +1,53 @@
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body text-center">
+      <h1 class="mb-3">
+        <img src="/secure-icon.png" alt="icon" width="20%" />
+      </h1>
+      <h2>Login</h2>
+
+      <%#
+        ----------------------------------------------------------------------------------------------------
+        The following code is obtained from ChatGPT 
+        The query to obtain the code from ChatGPT is:
+        Query: giving the code below, i want to show an 'couldn't find user with email user_email@gmail.com'
+        when user enter a email that is not in the database. I also want to show a 'password is incorrect'
+        error message when the user email is in the database, but the password is incorrect.
+        ----------------------------------------------------------------------------------------------------
+        %>
+
+      <% if (typeof messages !== 'undefined' && messages.length > 0) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= messages[messages.length - 1] %>
+        </div>
+      <% } %>   
+
+      <form action="/auth/login" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="Enter Email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="Enter Password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <a href="/auth/github" class="btn btn-danger btn-block">GitHub Login</a>
+      </form>
+      <p class="mt-4">New User? <a href="#">Register</a></p>
+      <p>Forgot Password? <a href="#">Reset</a></p>
+    </div>
+  </div>
+</div>
